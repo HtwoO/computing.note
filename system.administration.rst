@@ -1,17 +1,26 @@
 System administration tip and trick
-####################
+####################################
 
-Hardware
+Hardware management
+--------------------
 
-Hard drive
+Windows
+
+Hard drive (to be filled when I be on a Windows machine)
 
 >>>
 
-Computing environment
-------------------------
+Keyboard
+========
+
+dump current X11 keyboard mapping to a file?
+
+>>> xmodmap -pke > ~/.config/xmodmap.$(date +%m%d.%H%M)
+
+General computing environment check
+------------------------------------
 
 Windows
-========
 
 >>> systeminfo
 
@@ -64,10 +73,11 @@ Show system-wide proxy settings in ``cmd.exe``
 
 Show user-specific proxy settings from ``cmd.exe``:
 
-C:\> reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
+>>> reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
 
 Get user-specific proxy settings in PowerShell
-Get-ItemProperty -Path "Registry::HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
+
+>>> Get-ItemProperty -Path "Registry::HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
 
 Add ``-UseBasicParsing`` to prevent ``Internet Explorer`` popup window
 
@@ -84,13 +94,21 @@ Proxy setting in PowerShell and check proxying status for a URL
 Power management
 -------------------
 
+Disable suspend and hibernation on Linux
+
+>>> sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+Revert above change
+
+>>> sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
 On Windows
 
 Reboot computer
 
 >>> shutdown /r /t 0
 
-List existing Power Scheme
+List existing power scheme
 
 >>> powercfg -l
 Existing Power Schemes (* Active)
@@ -103,7 +121,7 @@ Set power scheme (used when no one is logged in)
 
 >>> powercfg -setactive 381b4222-f694-41f0-9685-ff5bb260df2e
 
-Set Power Configuration for High Performance
+Set power configuration to "High Performance"
 
 >>> powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 
@@ -114,7 +132,11 @@ Turn hibernation off
 Service management
 -------------------
 
-List running service
+List running service on Windows
+
+>>> net start
+
+Add remote Windows shared data
 
 >>> net use \\fs1.example.net
 System error 1272 has occurred.
@@ -122,9 +144,6 @@ System error 1272 has occurred.
 You can't access this shared folder because your organization's security policies block unauthenticated guest access. These policies help protect your PC from unsafe or malicious devices on the network.
 
 >>> net use \\fs1.example.net /user:domain\username
-
->>> net start
-
 
 Process management
 -------------------
@@ -137,26 +156,11 @@ Tools on Windows: Task Manager (GUI)
 
 >>> tasklist
 
+with PowerShell
+
 >>> Get-Process
 
-Kill a process (Windows PowerShell)
-
 >>> taskkill /f /pid 3312
-
-Troubleshooting
--------------------
-
-List log name
-
->>> wevtutil enum-logs
-
-Display the three most recent events from the Application log in textual format
-
->>> wevtutil query-events Application /c:3 /rd:true /f:text
-
-Export log to file
-
->>> wevtutil epl c:\mylog1.txt
 
 Find out network service list
 
@@ -203,7 +207,6 @@ LocalAddress LocalPort  State OwningProcess
 
 GUI tool: ``resmon.exe``, `TCPView`_ from `sysinternals`_
 
-
 >>> Get-Command ping
 CommandType     Name           Version    Source
 -----------     ----           -------    ------
@@ -217,8 +220,6 @@ Get-Command : 无法将“winget”项识别为 cmdlet、函数、脚本文件�
     + CategoryInfo          : ObjectNotFound: (winget:String) [Get-Command], CommandNotFoundException
     + FullyQualifiedErrorId : CommandNotFoundException,Microsoft.PowerShell.Commands.GetCommandCommand
 
-
-
 Install Powershell 7
 
 >>> Install-Module -Name PowerShellGet
@@ -226,155 +227,23 @@ Install Powershell 7
 Install ``OpenSSH.Server`` on Windows server 2019 and later
 
 >>> Add-WindowsCapability -Online -Name OpenSSH.Server
-
 >>> Start-Service sshd
 >>> Set-Service sshd -StartupType Automatic
 
+Important data management
+---------------------------
 
-``BTRFS``
-----------
-
->>> btrfs subvolume snapshot -r /srv/OS/ubuntu-20.amd64.base{,.$(date +%F)}
->>> btrfs send /srv/OS/ubuntu-20.amd64.base.2021-08-25 | btrfs receive -v /data/OS/
-
-Disable suspend and hibernation
---------------------------------
-
->>> sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
-
-Revert above change
-
->>> sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
-
-``debootstrap``
-----------------
-
-Check ``/usr/share/debootstrap/scripts/`` for supported distribution
-
->>> debootstrap --components=main,contrib,non-free \
-    --merged-usr --variant=minbase bullseye \
-    /srv/OS/debian-11.amd64 http://mirrors.bfsu.edu.cn/debian/
-
->>> debootstrap --arch=arm64 --components=main \
-    --merged-usr --variant=minbase sid \
-    /srv/OS/debian-sid.arm64 http://opentuna.cn/debian/
-
->>> debootstrap --components=main,universe,restricted \
-    --include=systemd \
-    --merged-usr --variant=minbase bionic \
-    /srv/OS/ubuntu-18 http://opentuna.cn/ubuntu/
-
->>> sudo debootstrap --cache-dir=/srv/box/deb.cache/debian-10/ buster /srv/box/ostree/debian-10.$(date +%F) http://mirrors.bfsu.edu.cn/debian/
-I: Target architecture can be executed
-I: Retrieving InRelease
-I: Checking Release signature
-I: Valid Release signature (key id 6D33866EDD8FFA41C0143AEDDCC9EFBF77E11517)
-I: Retrieving Packages
-I: Validating Packages
-I: Resolving dependencies of required packages...
-I: Resolving dependencies of base packages...
-...
-I: Retrieving systemd 241-7~deb10u8
-I: Validating systemd 241-7~deb10u8
-...
-I: Chosen extractor for .deb packages: dpkg-deb
-I: Extracting libacl1...
-...
-I: Installing core packages...
-I: Unpacking required packages...
-...
-I: Configuring required packages...
-I: Configuring debian-archive-keyring...
-...
-I: Unpacking the base system...
-I: Unpacking apt-utils...
-...
-I: Configuring systemd...
-I: Base system installed successfully.
-
-
-Necessary Debian package for a system on (amd64) bare metal
-
-bootloader: ``grub-efi`` or ``grub-pc``, none if ``systemd-boot (bootctl)`` is to be used
-
-Kernel tool: ``initramfs-tools``
-
-`LUKS`_ tool: ``cryptsetup``
-
-Debian: ``linux-image-amd64``
-
-Ubuntu: ``linux-image-generic``
-
-Change hostname of the rootfs
-
->>> vi <rootfs>/etc/hostname
-
-Change root password:
-
->>> systemd-nspawn -D <rootfs>
->>> chroot <rootfs>
-
-Customize your preferred mirror
-
->>> rsync debian-11.{bfsu,opentuna}.list \
-    <rootfs>/etc/apt/sources.list.d/
-
-Tool for system admin
-
->>> apt-get --yes install --no-install-recommends bash-completion \
-    ca-certificates efibootmgr gnupg htop sudo tree zstd
-
-Tool for network admin
-
->>> apt-get --yes install --no-install-recommends ncat nftables
-
-Server remote management
-
->>> apt-get --yes install --no-install-recommends openssh-server
-
-Basic development package
-
->>> apt-get --yes install --no-install-recommends python3 build-essential
-
-Tool for every day use
-
->>> apt-get --yes install --no-install-recommends curl file ncdu rsync tmux vim wget
-
-bash-completion ca-certificates dbus efibootmgr file gnupg grub-efi htop iproute2 linux-image-amd64 locales ncat nftables openssh-server rsync sudo systemd-sysv tmux tree vim zstd
-
-bash-completion ca-certificates dbus file gnupg grub-pc htop iproute2 linux-image-amd64 locales ncat nftables openssh-server rsync sudo systemd-sysv tmux tree vim zstd
-
-Nvidia driver and CUDA on Ubuntu 20.04: ``nvidia-headless-470``, ``nvidia-driver-470``
-``nvidia-headless-470-server`` ``nvidia-utils-470-server``
-
->>> apt install --no-install-recommends linux-headers-generic \
-    nvidia-headless-470 nvidia-utils-470
-...
-The following NEW packages will be installed:
-  binutils binutils-common binutils-x86-64-linux-gnu bzip2 cpp cpp-9 dctrl-tools distro-info-data dkms dpkg-dev gcc gcc-9 gcc-9-base libasan5 libatomic1 libbinutils  libcc1-0 libctf-nobfd0 libctf0 libdpkg-perl libgcc-9-dev libgdbm-compat4 libgdbm6 libgomp1 libisl22 libitm1 liblsan0 libmpc3 libmpfr6 libnvidia-cfg1-470 libnvidia-compute-470 libpciaccess0 libperl5.30 libquadmath0 libtsan0 libubsan1 lsb-release make nvidia-compute-utils-470 nvidia-dkms-470 nvidia-headless-470 nvidia-headless-no-dkms-470 nvidia-kernel-common-470 nvidia-kernel-source-470 patch perl perl-modules-5.30 xz-utils
-0 upgraded, 48 newly installed, 0 to remove and 0 not upgraded.
-Need to get 107 MB of archives.
-After this operation, 382 MB of additional disk space will be used.
-
->>> apt-get --yes install --no-install-recommends linux-headers-generic \
-    nvidia-driver-470 nvidia-utils-470
-...
-0 upgraded, 113 newly installed, 0 to remove and 0 not upgraded.
-Need to get 290 MB of archives.
-After this operation, 1202 MB of additional disk space will be used.
-
->>> nvidia-xconfig --query-gpu-info
->>> nvidia-debugdump --list
-
->>> apt-get --yes install --no-install-recommends cifs-utils
-
-Default Certificate Trust Store locations for each platform:
+Default certificate store location for each platform:
 
 OS X 10.11 macOS: ``/usr/local/etc/openssl/certs``
+
 RHEL:  	``/etc/pki/tls/cert.pem``
+
 Debian, SUSE Linux Enterprise, Ubuntu: ``/etc/ssl/certs``
 
-Windows PowerShell:
+Windows
+
+with Windows PowerShell:
 
 >>> ls CERT:
 Location   : CurrentUser
@@ -427,13 +296,13 @@ $array | Export-Csv -Path “c:\Windows.Server.2016.LocalMachine.CA.list.csv”
     })
 $array | Export-Csv -Path “c:\Windows.10.1709.CurrentUser.CA.list.csv”
 
-Cleanup
+Data storage mangement
+------------------------
 
-Remove package repo used by ``debootstrap``
+``BTRFS``
 
->>> rm <rootfs>/etc/apt/sources.list
-
->>> apt install --no-install-recommends usrmerge
+>>> btrfs subvolume snapshot -r /srv/OS/ubuntu-20.amd64.base{,.$(date +%F)}
+>>> btrfs send /srv/OS/ubuntu-20.amd64.base.2021-08-25 | btrfs receive -v /data/OS/
 
 ``DNS (Domain Name Service)``
 --------------------------------
@@ -441,7 +310,6 @@ Remove package repo used by ``debootstrap``
 Need to check what is managing DNS resolution, for example what generated ``/etc/resolv.conf``
 
 ``Bind9``
-==========
 
 dump and view cache
 
@@ -454,7 +322,6 @@ Clear all cache or just one domain name cache
 >>> sudo rndc flushname example.net
 
 ``dnsmasq``
-============
 
 >>> sudo pkill -USR1 dnsmasq # dump statistics to it's log
 
@@ -464,8 +331,7 @@ Clear all cache or just one domain name cache
 
 Use ``-q`` or ``--log-queries`` when starting ``dnsmasq`` to log the statistics
 
-``macOS``
-==========
+macOS
 
 >>> sudo dscacheutil -flushcache
 >>> sudo killall -HUP mDNSResponder
@@ -474,12 +340,14 @@ OS X 10.5 or earlier
 
 >>> sudo lookupd -flushcache
 
-``Windows``
+Windows
 
 >>> ipconfig /flushdns
 
-``efibootmgr``
---------------
+Boot menu management
+--------------------
+
+Managing EFI boot menu with ``efibootmgr``
 
 Create a boot entry
 
@@ -498,32 +366,10 @@ Set next boot entry
 
 >>> efibootmgr --bootnext 0003
 
-Enable persistent journal
---------------------------
-
->>> sudo mkdir -p /var/log/journal
->>> sudo systemd-tmpfiles --create --prefix /var/log/journal
->>> sudo systemctl restart systemd-journald
-
-Find out direct dependencies of an ELF file
-------------------------------------------------
-
->>> readelf --dynamic /path/to/file.so | grep NEEDED
->>> objdump --all-headers /path/to/file.so | grep NEEDED
-
-Check symbols in a library
-
->>> nm --dynamic --extern-only --dynamic /usr/lib/libfoo.so.X.Y.Z
->>> objdump --demangle --dynamic-syms /usr/lib/libfoo.so.X.Y.Z
->>> readelf --symbols --wide /usr/lib/libfoo.so.X.Y.Z
-
-Exit from QEMU console
-------------------------
-
-First press both ``Ctrl`` ``A`` ( Ctrl + A ) , then press ``X``
+Networking
+------------
 
 Network adapter driver
-------------------------
 
 >>> journalctl --dmesg | grep --context=3 --color --ignore-case ethernet
 Aug 26 10:11:31 Mobile-Deb kernel: igb: Intel(R) Gigabit Ethernet Network Driver - version 5.4.0-k
@@ -581,45 +427,7 @@ driver: igb
 ...
 supports-priv-flags: yes
 
-``squid``
----------
-
->>> squidclient [-h 127.0.0.1 -p 3128] mgr:info
->>> squidclient -h 127.0.0.1 -p 3142 mgr:utilization
-
-``SSH``
---------
-
->>> ssh-keyscan -t rsa,ecdsa,ed25519 >> ~/.ssh/known_hosts
-
-Append host key into known_hosts
-
->>> ssh-keyscan hostname >> ~/.ssh/known_hosts
-
-Append hashed host key into known_hosts
-
->>> ssh-keyscan -H hostname >> ~/.ssh/known_hosts
-
-``strace``
-----------
-
->>> strace -o cmd.strace.$(date +%Y%m%d.%H%M).log -rt <cmd>
-
-`stress-ng`_
-------------
-
->>> stress-ng --mq 0 -t 30s --times --perf
-
-Forcing memory pressure
-
->>> stress-ng --brk 2 --stack 2 --bigheap 2
-
-Target certain `temperature`_
-
->>> stress-ng --cpu 0 --tz -t 60
-
-``vnstat``
-----------
+Log network traffic data with ``vnstat``
 
 >>> sudo apt-get --yes install --no-install-recommends vnstat
 >>> vnstat --iface br0  # show summary of an interface
@@ -635,14 +443,67 @@ vnStat daemon will automatically start monitoring "enX0" within 5 minutes if the
  eth0 [disabled]:
        2022-01    339.53 GiB  /  352.96 GiB  /  692.49 GiB
 
+``squid``
+
+>>> squidclient [-h 127.0.0.1 -p 3128] mgr:info
+>>> squidclient -h 127.0.0.1 -p 3142 mgr:utilization
+
+``SSH``
+
+>>> ssh-keyscan -t rsa,ecdsa,ed25519 >> ~/.ssh/known_hosts
+
+Append host key into known_hosts
+
+>>> ssh-keyscan hostname >> ~/.ssh/known_hosts
+
+Append hashed host key into known_hosts
+
+>>> ssh-keyscan -H hostname >> ~/.ssh/known_hosts
+
+``strace``
+
+>>> strace -o cmd.strace.$(date +%Y%m%d.%H%M).log -rt <cmd>
+
+`stress-ng`_
+
+>>> stress-ng --mq 0 -t 30s --times --perf
+
+Forcing memory pressure
+
+>>> stress-ng --brk 2 --stack 2 --bigheap 2
+
+Target certain `temperature`_
+
+>>> stress-ng --cpu 0 --tz -t 60
+
 Use ``xev`` to monitor X event
 
 >>> xev
 
-Keyboard
-----------
+Troubleshooting
+-------------------
 
->>> xmodmap -pke > ~/.config/xmodmap.$(date +%m%d.%H%M)
+Enable persistent journal with systemd on Linux
+
+>>> sudo mkdir -p /var/log/journal
+>>> sudo systemd-tmpfiles --create --prefix /var/log/journal
+>>> sudo systemctl restart systemd-journald
+
+List log name on Windows
+
+>>> wevtutil enum-logs
+
+Display the three most recent events from the Application log in textual format
+
+>>> wevtutil query-events Application /c:3 /rd:true /f:text
+
+Export log to file
+
+>>> wevtutil epl c:\mylog1.txt
+
+Note to reader:
+
+I have all kinds of computing notes recorded in this file, but may separate accordingly later. BTW, I decided to not use plural at times, but hesitate at others p_q
 
 Reference
 ----------
