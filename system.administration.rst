@@ -243,9 +243,15 @@ Important data management
 
 Default certificate store location for each platform:
 
-OS X 10.11 macOS: ``/usr/local/etc/openssl/certs``
+You can use GUI tools ``Keychain Access.app`` or ``钥匙串访问.app`` in Chinese to access certificate data on your system.
 
-RHEL:  	``/etc/pki/tls/cert.pem``
+macOS system certificate: ``/Library/Keychains/``
+
+macOS user certificate: ``~/Library/Keychains/``
+
+Certificate for Homebrew and terminal application? (on OS X 10.11 ~ macOS 11.6): ``/usr/local/etc/openssl/cert.pem``
+
+RHEL: ``/etc/pki/tls/cert.pem``
 
 Debian, SUSE Linux Enterprise, Ubuntu: ``/etc/ssl/certs``
 
