@@ -125,6 +125,7 @@ Do NOT install recommended packages
 >>> sudo apt-get install --no-install-recommends <foo>
 
 persistent setting ``APT::Install-Recommends``, create a file (for example ``/etc/apt/apt.conf.d/31norecommend``) and add the following content in it ::
+
     APT::Install-Recommends "0";
 
 >>> printf 'APT::Install-Recommends "0";' \
@@ -173,6 +174,7 @@ Use ``reportbug`` to send a bug report to Debian with email
 Considering that most user may not have an email client setup properly to send email from a terminal, I record the following step for a manual bug report with regular web email client like Gmail or Microsoft Outlook.
 
 You can use interactive mode to generate ``~/.reportbugrc``, but below is a file with example content, you should change certain field according to your system environment. ::
+
     reportbug_version "7.5.3~deb10u1"
     mode standard
     ui text
@@ -200,7 +202,7 @@ Rewriting subject to 'dbus: none'
 Saving a backup of the report at /tmp/reportbug-dbus-backup-20230205115405-eyhjz84p
 ...
 
-With the above command, you can find the generated bug report template at ``/tmp/reportbug-dbus-backup-...``. Now you can copy the content of the file to your favorite editor and edit it. You should remove the first paragraph of the file, then fillin the steps to reproduce the bug you are encounter by answering the questions in the template ``reportbug`` has just generated for you. ::
+With the above command, you can find the generated bug report template at ``/tmp/reportbug-dbus-backup-...``. Now you can copy the content of the file to your favorite editor and edit it. You should remove the first paragraph of the file, then fill in the steps to reproduce the bug you are encounter by answering the questions in the template ``reportbug`` has just generated for you. ::
 
    * What led up to the situation?
    * What exactly did you do (or not do) that was effective (or
@@ -210,12 +212,14 @@ With the above command, you can find the generated bug report template at ``/tmp
 
 After that, you can copy the content of the file and paste it to your email client. Then choose a descriptive subject for the bug, and then send the bug report to ``submit@bugs.debian.org`` (as shown in the template).
 
-Enable unattended-upgrades (security upgrade) ::
+Enable unattended-upgrades (security upgrade)
 
 >>> sudo apt install unattended-upgrades
 
 Reference
 ----------
+.. _LUKS: https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup
+
 https://wiki.debian.org/UnattendedUpgrades
 
 https://letsencrypt.org/docs/dst-root-ca-x3-expiration-september-2021/

@@ -519,7 +519,6 @@ https://phoenixnap.com/kb/linux-cpu-temp
 
 .. _TCPView: https://docs.microsoft.com/en-us/sysinternals/downloads/tcpview
 .. _sysinternals: https://docs.microsoft.com/en-us/sysinternals
-.. _LUKS: https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup
 .. _stress-ng: https://wiki.ubuntu.com/Kernel/Reference/stress-ng
 .. _temperature: https://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature
 
