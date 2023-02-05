@@ -10,17 +10,25 @@ Hard drive (to be filled when I be on a Windows machine)
 
 >>>
 
-Keyboard
-========
+General computing environment
+--------------------------------
+
+Keyboard shortcut
+==================
+
+``Linux``
 
 dump current X11 keyboard mapping to a file?
 
 >>> xmodmap -pke > ~/.config/xmodmap.$(date +%m%d.%H%M)
 
-General computing environment check
-------------------------------------
+``macOS``
 
-Windows
+Use readline's ``Alt+b`` and ``Alt+f`` shortcut for word jump in the terminal in Visual Studio Code (Codium) on macOS
+
+Search for ``meta`` in VS Code's preferences, and enable the checkbox under ``Terminal › Integrated: Mac Option Is Meta``
+
+``Windows``
 
 >>> systeminfo
 
