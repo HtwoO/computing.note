@@ -243,7 +243,7 @@ Important data management
 
 Default certificate store location for each platform:
 
-You can use GUI tools ``Keychain Access.app`` or ``钥匙串访问.app`` in Chinese to access certificate data on your system.
+You can use GUI tools ``Keychain Access.app`` or ``钥匙串访问.app`` in Chinese to access certificate data on your system. ``security`` command can be used to manage certificate data from the terminal.
 
 macOS system certificate: ``/Library/Keychains/``
 
