@@ -509,10 +509,6 @@ Export log to file
 
 >>> wevtutil epl c:\mylog1.txt
 
-Note to reader:
-
-I have all kinds of computing notes recorded in this file, but may separate accordingly later. BTW, I decided to not use plural at times, but hesitate at others p_q
-
 Reference
 ----------
 https://phoenixnap.com/kb/linux-cpu-temp
