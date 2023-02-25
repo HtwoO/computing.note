@@ -8,6 +8,14 @@ Windows
 
 Hard drive (to be filled when I be on a Windows machine)
 
+``macOS``
+
+>>> sysctl -a | grep machdep.cpu
+
+Check certain CPU feature
+
+>>> sysctl -a | grep 'machdep.cpu.features' | grep --ignore-case 'sse'
+
 >>>
 
 General computing environment
@@ -502,6 +510,10 @@ Enable persistent journal with systemd on Linux
 >>> sudo mkdir -p /var/log/journal
 >>> sudo systemd-tmpfiles --create --prefix /var/log/journal
 >>> sudo systemctl restart systemd-journald
+
+View realtime log on macOS
+
+>>> log stream --style syslog --info
 
 List log name on Windows
 
