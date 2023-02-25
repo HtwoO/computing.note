@@ -4,7 +4,7 @@ System administration tip and trick
 Hardware management
 --------------------
 
-Windows
+``Windows``
 
 Hard drive (to be filled when I be on a Windows machine)
 

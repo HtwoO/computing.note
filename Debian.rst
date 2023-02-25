@@ -205,8 +205,7 @@ Saving a backup of the report at /tmp/reportbug-dbus-backup-20230205115405-eyhjz
 With the above command, you can find the generated bug report template at ``/tmp/reportbug-dbus-backup-...``. Now you can copy the content of the file to your favorite editor and edit it. You should remove the first paragraph of the file, then fill in the steps to reproduce the bug you are encounter by answering the questions in the template ``reportbug`` has just generated for you. ::
 
    * What led up to the situation?
-   * What exactly did you do (or not do) that was effective (or
-     ineffective)?
+   * What exactly did you do (or not do) that was effective (or ineffective)?
    * What was the outcome of this action?
    * What outcome did you expect instead?
 
