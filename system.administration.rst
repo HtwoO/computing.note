@@ -397,6 +397,8 @@ Set next boot entry
 Networking
 ------------
 
+``Linux``
+
 Network adapter driver
 
 >>> journalctl --dmesg | grep --context=3 --color --ignore-case ethernet
@@ -454,6 +456,33 @@ H/W path               Device     Class          Description
 driver: igb
 ...
 supports-priv-flags: yes
+
+network routing with ``route`` command in ``iproute2`` package
+
+>>> ip route
+default via 192.168.42.129 dev usb0  src 192.168.42.115
+...
+
+>>> ip route add w.x.y.z/m via a.b.c.d dev $INTERFACE
+
+``macOS``
+
+>>> sudo route -n add -net w.x.y.z/m via a.b.c.d
+>>> sudo netstat -nr
+Routing tables
+...
+Internet:
+Destination     Gateway         Flags     Netif   Expire
+default         10.3.3.1        UGScg      en4
+...
+Internet6:
+Destination     Gateway         Flags     Netif   Expire
+default         fe80::%utun0    UGcIg     utun0       
+default         fe80::%utun1    UGcIg     utun1
+ff02::%en4/32   link#13         UmCI      en4
+
+Miscellaneous
+----------------
 
 Log network traffic data with ``vnstat``
 
