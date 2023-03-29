@@ -557,7 +557,9 @@ vnStat daemon will automatically start monitoring "enX0" within 5 minutes if the
 
 ``SSH``
 
->>> ssh-keyscan -t rsa,ecdsa,ed25519 >> ~/.ssh/known_hosts
+>>> ssh-keyscan -t rsa,ecdsa,ed25519 github.com >> ~/.ssh/known_hosts
+...
+# github.com:22 SSH-2.0-babeld-62777e2e
 
 Append host key into known_hosts
 
