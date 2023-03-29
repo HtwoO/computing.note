@@ -481,6 +481,56 @@ default         fe80::%utun0    UGcIg     utun0
 default         fe80::%utun1    UGcIg     utun1
 ff02::%en4/32   link#13         UmCI      en4
 
+>>> route get example.net
+   route to: 93.184.216.34
+destination: default
+.
+    gateway: 192.168.43.1
+  interface: en0
+      flags: <UP,GATEWAY,DONE,STATIC,PRCLONING,GLOBAL>
+...
+
+(manually) find out the service you're using
+
+>>> networksetup -listnetworkserviceorder
+...
+(5) Wi-Fi
+(Hardware Port: Wi-Fi, Device: en0)
+...
+
+>>> networksetup -getdnsservers 'Wi-Fi'
+223.6.6.6
+...
+2001:4860:4860::8844
+
+Update DNS setting ::
+
+ Usage: networksetup -setdnsservers <networkservice> <dns1> [dns2] [...]
+
+>>> networksetup -setdnsservers 'Wi-Fi' 223.6.6.6 223.5.5.5 1.0.0.1 1.1.1.1 240c::6666 240c::6644 2606:4700:4700::1111 2606:4700:4700::1001 2001:4860:4860::8888 2001:4860:4860::8844
+
+get web proxy status of the ``Wi-Fi`` service, notice this setting has no effect for applications run in a terminal
+
+>>> networksetup -getwebproxy 'Wi-Fi'
+Enabled: Yes
+Server: ::1
+Port: 8080
+Authenticated Proxy Enabled: 0
+
+Update web proxy setting ::
+
+ Usage: networksetup -setwebproxy <networkservice> <domain> <port number> <authenticated> <username> <password>
+
+Test setting web proxy with authentication. Seems I can skip the ``<password>`` option and type the password in interactively, and a ``keychain`` pop-up window will appear and for saving the credential the credential in the ``keychain`` application. I didn't provide the password to unlock the ``keychain`` application in the following example.
+
+>>> networksetup -setwebproxy 'Wi-Fi' localhost 8080 on 'Meow'
+Password:
+2023-03-29 16:24:19.958 networksetup[67308:3086436] error -128 attempting to create account and password for proxy: localhost:8080
+
+>>> networksetup -setwebproxystate 'Wi-Fi' off
+
+For socks proxy, use ``-getsocksfirewallproxy`` and ``-setsocksfirewallproxy`` to query and update of the state
+
 Miscellaneous
 ----------------
 
