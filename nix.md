@@ -1,7 +1,7 @@
 # Nix package manager
 
 ## Basic package management
-```
+``` shell
 # get number of available package in a channel
 $ nix-env --query --available --attr-path| wc -l
    51387
@@ -54,7 +54,7 @@ $ nix-env --list-generations
 ```
 
 ## Explore the data inside the Nix store
-```
+``` shell
 $ nix-store --export /nix/store/mjsidnx27rvrg305v1c08dhr1fid4mmw-llvm-11.1.0-lib > llvm-11.1.0-lib.nar
 
 # generate dependency graph in "dot" format of a package
@@ -116,7 +116,7 @@ experimental-features = nix-command flakes
 ```
 
 Query current config
-```
+``` shell
 $ nix show-config
 
 $ nix show-config | grep --ignore-case flake
@@ -125,7 +125,7 @@ experimental-features = flakes nix-command
 flake-registry = https://channels.nixos.org/flake-registry.json
 ```
 
-```
+``` shell
 $ nix flake new hello
 wrote: .../project/nix/hello/flake.nix
 
