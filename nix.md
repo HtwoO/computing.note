@@ -125,6 +125,8 @@ experimental-features = flakes nix-command
 flake-registry = https://channels.nixos.org/flake-registry.json
 ```
 
+## nix flake
+
 ``` shell
 $ nix flake new hello
 wrote: .../project/nix/hello/flake.nix
@@ -133,4 +135,31 @@ $ nix develop
 [4.9/33.4 MiB DL] downloading 'https://api.github.com/repos/NixOS/nixpkgs/tarball/d25de6654a34d99dceb02e71e6db516b3b545be6'
 warning: creating lock file '/Users/.../project/nix/hello/flake.lock'
 error: flake 'path:/Users/.../project/nix/hello' does not provide attribute 'devShells.x86_64-darwin.default', 'devShell.x86_64-darwin', 'packages.x86_64-darwin.default' or 'defaultPackage.x86_64-darwin'
+
+content of '.../project/nix/hello/flake.nix' (with empty line removed):
+{
+  description = "A very basic flake";
+  outputs = { self, nixpkgs }: {
+    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
+    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
+  };
+}
+see 2023-05 opened issue: https://github.com/NixOS/nix/issues/6879
+
+Manually change it to the following works:
+{
+  description = "A very basic flake";
+  outputs = { self, nixpkgs }: {
+    packages.x86_64-darwin.hello = nixpkgs.legacyPackages.x86_64-darwin.hello;
+    packages.x86_64-darwin.default = self.packages.x86_64-darwin.hello;
+    defaultPackage.x86_64-darwin = self.packages.x86_64-darwin.hello;
+  };
+}
+
+$ nix develop  # this create a subshell
+warning: creating lock file '/Users/.../project/nix/hello/flake.lock'
+$ nix-env --install --attr nixpkgs.hello
+installing 'hello-2.12.1'
+$ nix-env --query
+hello-2.12.1
 ```
