@@ -552,6 +552,12 @@ Log network traffic data with ``vnstat``
 Adding interface "enX0" to database for monitoring.
 vnStat daemon will automatically start monitoring "enX0" within 5 minutes if the daemon process is currently running.
 
+You will also need to enable the specific interface in `/etc/vnstat.conf` ::
+
+ Interface "enX0"
+
+Then ``restart`` the ``vnstat.service``, ``reload`` aren't enough: ``sudo systemctl restart vnstat.service``
+
 >>> vnstat
                       rx      /      tx      /     total    /   estimated
  enX0: Not enough data available yet.
