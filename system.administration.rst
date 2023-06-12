@@ -130,6 +130,14 @@ Reboot computer
 
 >>> shutdown /r /t 0
 
+Reboot a remote host and specify the reason in system event log
+
+>>> shutdown /s /t 30 /c "Reconfigure myapp" /d p:4:1
+
+Shutdown computer now
+
+>>> shutdown /s /t 0
+
 List existing power scheme
 
 >>> powercfg -l
@@ -194,9 +202,9 @@ On Linux with ``iproute2`` utility ``ss``
 
 On macOS with ``lsof`` or ``netstat``
 
->>> sudo lsof -P | grep -i 'listen'
->>> sudo lsof -i -nP | grep -i 'listen'
->>> sudo netstat -an | grep -i 'listen'
+>>> sudo lsof -P | grep --ignore-case 'listen'
+>>> sudo lsof -i -nP | grep --ignore-case 'listen'
+>>> sudo netstat -an | grep --ignore-case 'listen'
 
 Windows PowerShell
 
