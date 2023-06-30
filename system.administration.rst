@@ -383,6 +383,8 @@ Windows
 Boot menu management
 --------------------
 
+on Linux
+
 Managing EFI boot menu with ``efibootmgr``
 
 Create a boot entry
@@ -473,6 +475,21 @@ default via 192.168.42.129 dev usb0  src 192.168.42.115
 
 >>> ip route add w.x.y.z/m via a.b.c.d dev $INTERFACE
 
+if ``ping`` or ``ping6`` complains about "missing cap_net_raw+p capability or setuid?", check with ``getcap`` that it has ``cap_net_raw=ep``, ``getcap`` returns nothing if ``ping`` does not have the capability,
+
+>>> /usr/sbin/getcap /usr/bin/ping
+/usr/bin/ping cap_net_raw=ep
+
+or kernel ``net.ipv4.ping_group_range`` parameter with ``sysctl`` like the following:
+
+>>> /usr/sbin/sysctl net.ipv4.ping_group_range
+net.ipv4.ping_group_range = 1   0
+
+If your kernel support this feature, you need to change it to include the group id (gid) of the active user running ``ping``:
+
+>>> sudo sysctl --write net.ipv4.ping_group_range='0 1000'
+net.ipv4.ping_group_range = 0 1000
+
 ``macOS``
 
 >>> sudo route -n add -net w.x.y.z/m via a.b.c.d
@@ -537,7 +554,7 @@ Password:
 
 >>> networksetup -setwebproxystate 'Wi-Fi' off
 
-For socks proxy, use ``-getsocksfirewallproxy`` and ``-setsocksfirewallproxy`` to query and update of the state
+For socks proxy, use ``-getsocksfirewallproxy`` and ``-setsocksfirewallproxy`` to query and update the state
 
 Miscellaneous
 ----------------
