@@ -485,6 +485,8 @@ or kernel ``net.ipv4.ping_group_range`` parameter with ``sysctl`` like the follo
 >>> /usr/sbin/sysctl net.ipv4.ping_group_range
 net.ipv4.ping_group_range = 1   0
 
+https://blog.lilydjwg.me/2013/10/29/non-privileged-icmp-ping.41390.html
+
 If your kernel support this feature, you need to change it to include the group id (gid) of the active user running ``ping``:
 
 >>> sudo sysctl --write net.ipv4.ping_group_range='0 1000'
