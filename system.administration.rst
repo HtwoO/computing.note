@@ -625,17 +625,29 @@ Use ``xev`` to monitor X event
 Troubleshooting
 -------------------
 
-Enable persistent journal with systemd on Linux
+``Linux``
+
+Enable persistent journal with systemd
 
 >>> sudo mkdir -p /var/log/journal
 >>> sudo systemd-tmpfiles --create --prefix /var/log/journal
 >>> sudo systemctl restart systemd-journald
 
-View realtime log on macOS
+Cleanup old ``systemd-journald`` log
+
+>>> sudo journalctl --vacuum-time=3m
+.
+Vacuuming done, freed 1.8G of archived journals from /var/log/journal/...
+
+``macOS``
+
+View realtime log
 
 >>> log stream --style syslog --info
 
-List log name on Windows
+``Windows``
+
+List log name
 
 >>> wevtutil enum-logs
 
