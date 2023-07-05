@@ -643,7 +643,22 @@ Vacuuming done, freed 1.8G of archived journals from /var/log/journal/...
 
 View realtime log
 
->>> log stream --style syslog --info
+>>> log stream --info
+
+Find out process id of running DNS query service
+
+>>> sudo lsof -i -nP | rg -e '53' -e 'pid'
+COMMAND     PID           USER   FD   TYPE             DEVICE SIZE/OFF   NODE NAME
+.
+mDNSRespo   181 _mdnsresponder    6u  IPv4 0x4cd7f48a2d576b0f      0t0    UDP *:5353
+mDNSRespo   181 _mdnsresponder    7u  IPv6 0x4cd7f48a2d576dff      0t0    UDP *:5353
+.
+
+>>> log stream --process 181
+
+or just use the ``--predicate`` filter to get only live ``mDNSResponder`` log
+
+>>> log stream --predicate 'process == "mDNSResponder"'
 
 ``Windows``
 
