@@ -161,7 +161,7 @@ For each relation (table, view, materialized view, index, sequence, or foreign t
  user    |       10 |...| ******** |          |
 (1 row)
 
->>> postgres=# \dnS
+>>> \dnS
       List of schemas
         Name        | Owner
 --------------------+-------
