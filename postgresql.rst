@@ -85,6 +85,17 @@ through Homebrew
 
 >>> brew services stop postgresql@14
 
+Disable wrapping for ``psql`` output, by changing shell pager option in ``$HOME/.script.bsd`` ::
+
+ psql() ( PAGER="less --chop-long-lines" command psql "$@" )
+
+>>> source ~/.script.bsd
+
+>>> LANG=C type psql
+psql is a function
+psql ()
+.
+
 >>> psql posgres
 psql (14.8 (Homebrew))
 ...
