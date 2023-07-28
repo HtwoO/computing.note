@@ -1,7 +1,8 @@
 Online Typescript REPL (Read-Eval-Print Loop)
+
 https://www.typescriptlang.org/play
 
-Deno has typescript as first class citizen, compared to Node.js, it supports some common environment variable (such as ``HTTPS_PROXY``) and other nice environment variable (e.g. ``DENO_AUTH_TOKENS`` ``DENO_CERT`` ``DENO_TLS_CA_STORE`` ``NPM_CONFIG_REGISTRY``) out of the box. So you can inject these variable before running Deno.
+Deno has Typescript as first class citizen, compared to **Node.js**, it supports some common environment variable (such as ``HTTPS_PROXY``) and other nice environment variable (e.g. ``DENO_AUTH_TOKENS`` ``DENO_CERT`` ``DENO_TLS_CA_STORE`` ``NPM_CONFIG_REGISTRY``) out of the box. So you can inject these variable before running Deno.
 
 ``Linux`` installation
 ------------------------
@@ -35,6 +36,9 @@ Stuck? Join our Discord https://discord.gg/deno
  const bot = new Bot(Deno.env.get("BOT_TKN")); // <-- put your bot token between the ""
 
 >>> deno run --allow-env --allow-net bot.ts
+grammy:bot Initializing bot +0ms
+.
+grammy:core Calling getUpdates +30s
 
 Deno user cache on macOS: ``~/Library/Caches/deno``
 Several SQLite database under ``~/Library/Caches/deno``
@@ -64,6 +68,6 @@ The TypeScript Handbook https://www.typescriptlang.org/docs/handbook/intro.html
 
 https://www.typescriptlang.org/tsconfig
 
-tsconfig.json schema http://json.schemastore.org/tsconfig
+``tsconfig.json`` schema http://json.schemastore.org/tsconfig
 
 https://en.wikipedia.org/wiki/ECMAScript_version_history
