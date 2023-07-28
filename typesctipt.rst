@@ -36,6 +36,9 @@ Stuck? Join our Discord https://discord.gg/deno
 
 >>> deno run --allow-env --allow-net bot.ts
 
+Deno user cache on macOS: ``~/Library/Caches/deno``
+Several SQLite database under ``~/Library/Caches/deno``
+
 Use Typescript with Node.js
 ------------------------------
 
