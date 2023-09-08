@@ -203,8 +203,18 @@ On Linux with ``iproute2`` utility ``ss``
 On macOS with ``lsof`` or ``netstat``
 
 >>> sudo lsof -P | grep --ignore-case 'listen'
+launchd   1       root   7u   unix 0x322fedbd02b82565   0t0   /private/tmp/com.apple.launchd.MOMbYSsODV/Listeners
+.
+sesinetd  96036   _www   6u   IPv4 0x322fedbd18819bc5   0t0   TCP *:1715 (LISTEN)
+
 >>> sudo lsof -i -nP | grep --ignore-case 'listen'
+launchd       1           root    8u  IPv6 0x322fedbd02e6f175      0t0    TCP *:22 (LISTEN)
+.
+dns-sd     4696           _www    6u  IPv4 0x322fedbd18819bc5      0t0    TCP *:1715 (LISTEN)
+
 >>> sudo netstat -an | grep --ignore-case 'listen'
+tcp6   0   0  *.8080     *.*    LISTEN
+.
 
 Windows PowerShell
 
