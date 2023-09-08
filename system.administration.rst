@@ -267,11 +267,15 @@ Default certificate store location for each platform:
 
 You can use GUI tools ``Keychain Access.app`` or ``钥匙串访问.app`` in Chinese to access certificate data on your system. ``security`` command can be used to manage certificate data from the terminal.
 
-macOS system certificate: ``/Library/Keychains/``
+macOS system certificate: ``/System/Library/Keychains/``
+
+macOS certificate: ``/Library/Keychains/``
 
 macOS user certificate: ``~/Library/Keychains/``
 
 Certificate for Homebrew and terminal application? (on OS X 10.11 ~ macOS 11.6): ``/usr/local/etc/openssl/cert.pem``
+
+>>> /usr/bin/security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain
 
 RHEL: ``/etc/pki/tls/cert.pem``
 
