@@ -51,6 +51,9 @@ $ nix-env --list-generations
    1   2022-11-10 11:49:39
    2   2022-11-10 11:49:39
    3   2023-03-09 13:19:17   (current)
+
+# if your system is running really well, you can delete old generations
+$ nix-env --delete-generations old
 ```
 
 ## Explore the data inside the Nix store
