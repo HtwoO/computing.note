@@ -4,20 +4,26 @@ Windows server core system requirement:
 
 The installation process is pretty easy, just boot from a Windows Server 2022 installation media and provide the following required data for the OS:
 
-Option Default
-
-Time and currency format    English (United States)
-Keyboard or input method    US
+======================== ========================
+          Option              Default value
+------------------------ ------------------------
+Time and currency format English (United States)
+Keyboard or input method US
+======================== ========================
 
 Hard drive to install to;
+
 Data decided by the installation media:
 
 Language to install: English (United States)
 
 Optional data (can be provided after installation): product key
 
-Time and currency format    Chinese (Simplified, China)
-Keyboard or input method    Microsoft Pinyin or US
+======================== ============================
+          Option              Default value
+Time and currency format Chinese (Simplified, China)
+Keyboard or input method Microsoft Pinyin / US
+======================== ============================
 
 After reboot and login for the first time, you should
 
