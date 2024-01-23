@@ -28,7 +28,7 @@ v18.16.0
 >>> node --eval='console.log(process.env.SHELL)'
 /usr/local/bin/bash
 
-Node.js REPL
+Node.js Read-Eval-Print Loop (REPL)
 
 >>> node
 .
@@ -39,6 +39,15 @@ Node.js REPL
  > console.log(Buffer.from('汉字，中文', 'utf8'));
  <Buffer e6 b1 89 e5 ad 97 ef bc 8c e4 b8 ad e6 96 87>
  undefined
+
+> const { isBuiltin } = await import('node:module')
+undefined
+> isBuiltin('node:fs')
+true
+> isBuiltin('wss')
+false
+> isBuiltin('process')
+true
 
 Package manager ``npm`` was installed with Node.js
 
