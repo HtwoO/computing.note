@@ -136,6 +136,43 @@ Disable interface
 Get route table
 
 >>> Get-NetRoute
+ifIndex DestinationPrefix                              NextHop
+------- -----------------                              -------
+3       255.255.255.255/32                             0.0.0.0
+.
+1       ::1/128                                        ::
+
+Get very verbose route information
+
+>>> Get-NetRoute | Format-List -Property *
+
+>>> New-NetRoute -DestinationPrefix "10.0.0.0/24" -InterfaceIndex 12 -NextHop 192.168.0.1 [-RouteMetric 128]
+
+show current IPv4 route, 查看当前 IPv4 路由
+
+removes all of the IP routes that have a next hop of ``192.168.0.1``
+>>> Remove-NetRoute -NextHop "192.168.0.1"
+
+>>> route [-4] PRINT
+
+Add a new route, ``-p`` means persistant, 选项使以下路由配成持久生效（即重启后此路由仍在）
+
+>>> route [-p] ADD 10.3.0.0 mask 255.255.0.0 10.3.3.254 [metric 10]
+ 操作完成!
+
+>>> route ADD 3ffe::/32 3ffe::1
+
+>>>  help curl
+名称
+    Invoke-WebRequest
+.
+语法
+    Invoke-WebRequest [-Uri] <uri>  [<CommonParameters>]
+.
+别名
+    iwr
+    wget
+    curl
 
 Firewall
 ========
@@ -292,6 +329,12 @@ Preparing a new empty drive
 .. _Storage: https://docs.microsoft.com/en-us/powershell/module/storage/
 
 Different license level feature comparison: https://docs.microsoft.com/en-us/windows-server/get-started/editions-comparison-windows-server-2019
+
+https://learn.microsoft.com/en-us/powershell/module/nettcpip/new-netroute
+
+https://learn.microsoft.com/en-us/powershell/module/nettcpip/set-netroute
+
+https://learn.microsoft.com/en-us/powershell/module/nettcpip/remove-netroute
 
 https://docs.microsoft.com/en-us/powershell/module/netsecurity/new-netfirewallrule
 
