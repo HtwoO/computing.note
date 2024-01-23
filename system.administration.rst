@@ -508,7 +508,7 @@ net.ipv4.ping_group_range = 0 1000
 
 ``macOS``
 
->>> sudo route -n add -net w.x.y.z/m via a.b.c.d
+>>> sudo route -n add -net w.x.y.z/m a.b.c.d
 >>> sudo netstat -nr
 Routing tables
 ...
