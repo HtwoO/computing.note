@@ -109,12 +109,30 @@ General
 ...
   \lo_unlink LOBOID      large object operations
 
+>>> \conninfo
+You are connected to database "postgres" as user "..." via socket in "/tmp" at port "5432".
+
 >>> \list
                          List of databases
    Name    | Owner | Encoding | Collate | Ctype | Access privileges
 -----------+-------+----------+---------+-------+-------------------
  postgres  | user  | UTF8     | C       | C     |
 ...
+
+>>> create database test0;
+CREATE DATABASE
+
+>>> \l
+                         List of databases
+   Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
+-----------+-------+----------+-------------+-------------+-------------------
+ test0     | user  | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+
+>>> \connect test0
+You are now connected to database "test0" as user "...".
+
+>>> \dt
+Did not find any relations.
 
 >>> \dS
                       List of relations
