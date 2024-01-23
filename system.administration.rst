@@ -655,9 +655,17 @@ Vacuuming done, freed 1.8G of archived journals from /var/log/journal/...
 
 ``macOS``
 
+show log in the last X minutes ( 4 in this case )
+
+>>> log show --last 4m
+
 View realtime log
 
 >>> log stream --info
+
+``--level``: {``off`` | ``default`` | ``info`` | ``debug``} The level is a hierarchy, e.g. debug implies debug, info, and default
+
+>>> log stream --level default
 
 Find out process id of running DNS query service
 
@@ -673,6 +681,11 @@ mDNSRespo   181 _mdnsresponder    7u  IPv6 0x4cd7f48a2d576dff      0t0    UDP *:
 or just use the ``--predicate`` filter to get only live ``mDNSResponder`` log
 
 >>> log stream --predicate 'process == "mDNSResponder"'
+
+>>> log show --last 3h --debug --predicate 'eventMessage contains "duplicate IP address"'
+Timestamp                       Thread     Type      Activity   PID   TTL
+.
+2024-01-17 15:12:58.867066+0800 0x36ad28   Default   0x0        0     0    kernel: en4 duplicate IP address 10.x.y.z sent from address aa:bb:cc:33:99:66
 
 ``Windows``
 
