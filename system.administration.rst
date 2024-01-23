@@ -572,6 +572,27 @@ Password:
 
 For socks proxy, use ``-getsocksfirewallproxy`` and ``-setsocksfirewallproxy`` to query and update the state
 
+``Windows``
+Windows 系统遇到 IP 冲突时的系统事件日志示例 ::
+
+ 日志名称:       System
+ 来源:           Tcpip
+ 日期:           2023/12/26 15:19:24
+ 事件 ID:        4199
+ 任务类别:       无
+ 级别:           错误
+ 关键字:         经典
+ 用户:           暂缺
+ 计算机:         Meow-DESKTOP
+ 描述:           系统检测到 IP 地址 10.x.y.z 和网络硬件地址 aa-bb-cc-33-99-66 发生地址冲突。 此系统的网络操作可能会突然中断。
+
+Windows 系统日志里的 IP 冲突日志条目的部分信息，出现 IP 冲突的时间段里，在出现冲突的机器上，在命令行用 arp 命令查询地址解析协议 (ARP) 显示的 IP 地址和 MAC 地址的映射关系，可以找到使用了同样 IP 地址的另一个计算机的 MAC 地址：
+
+>>> arp.exe -a
+接口: 10.5.6.3 --- 0x6
+  Internet 地址 物理地址                类型
+  10.5.6.4      aa-bb-cc-33-99-66       动态
+
 Miscellaneous
 ----------------
 
