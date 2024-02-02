@@ -586,6 +586,34 @@ Windows 系统遇到 IP 冲突时的系统事件日志示例 ::
  计算机:         Meow-DESKTOP
  描述:           系统检测到 IP 地址 10.x.y.z 和网络硬件地址 aa-bb-cc-33-99-66 发生地址冲突。 此系统的网络操作可能会突然中断。
 
+事件 Xml ::
+
+ <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+   <System>
+     <Provider Name="Tcpip" />
+     <EventID Qualifiers="49152">4199</EventID>
+     <Version>0</Version>
+     <Level>2</Level>
+     <Task>0</Task>
+     <Opcode>0</Opcode>
+     <Keywords>0x80000000000000</Keywords>
+     <TimeCreated SystemTime="2023-12-26T08:07:40.3056028Z" />
+     <EventRecordID>2487</EventRecordID>
+     <Correlation />
+     <Execution ProcessID="4" ThreadID="360" />
+     <Channel>System</Channel>
+     <Computer>Meow-DESKTOP</Computer>
+     <Security />
+   </System>
+   <EventData>
+     <Data>
+     </Data>
+     <Data>10.x.y.z</Data>
+     <Data>aa-bb-cc-33-99-66</Data>
+     <Binary>...030...</Binary>
+   </EventData>
+ </Event>
+
 Windows 系统日志里的 IP 冲突日志条目的部分信息，出现 IP 冲突的时间段里，在出现冲突的机器上，在命令行用 arp 命令查询地址解析协议 (ARP) 显示的 IP 地址和 MAC 地址的映射关系，可以找到使用了同样 IP 地址的另一个计算机的 MAC 地址：
 
 >>> arp.exe -a
