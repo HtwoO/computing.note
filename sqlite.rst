@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS "User" (
 >>> .tables
 Post    User    _prisma_migrations
 
->>> SELECT * from User;
+>>> select * from User;
 1|alice@example.net|Alice
 .
 3|eve@example.net|Eve
@@ -47,9 +47,39 @@ Back to operating system shell, trun on human friendly ``column`` output mode, a
 
 in SQLite REPL
 
->>> SELECT * from User;
+>>> select * from User;
 id          email              name
 ----------  -----------------  ----------
 1           alice@example.net  Alice
 .
 3           eve@example.net    Eve
+
+>>> select typeof(value) from json_each('{"a": {"pi": 3.142}}');
+text
+
+>>> select typeof(value) from json_tree('{"a": {"e": 2.718}}');
+text
+text
+real
+
+Import data from CSV file
+--------------------------------
+
+In SQLite REPL
+>>> create table foo(a, b);
+>>> .mode csv
+>>> .import test.csv foo
+
+if the first line of your csv file contains the column names, then you can omit the first create table command and sqlite will use the column names from the csv file
+SQLite> .import test.csv foo --csv
+
+From CLI
+>>> sqlite3 -header -csv input.db "select * from table_name;" > table_name.csv
+>>> sqlite3 -header -csv input.db < query.sql > data.csv
+
+You can use LiteCLI for a much better terminal experience when using SQLite.
+
+Reference
+------------
+
+2013, https://stackoverflow.com/questions/14947916/import-csv-to-sqlite
