@@ -41,7 +41,7 @@ Post    User    _prisma_migrations
 
 >>> .quit
 
-Back to operating system shell, trun on human friendly ``column`` output mode, and enable header output by default.
+Back to operating system shell, turn on human friendly ``column`` output mode, and enable header output by default.
 
 >>> sqlite3 -column -header mydata.db
 
@@ -77,7 +77,7 @@ From CLI
 >>> sqlite3 -header -csv input.db "select * from table_name;" > table_name.csv
 >>> sqlite3 -header -csv input.db < query.sql > data.csv
 
-You can use LiteCLI for a much better terminal experience when using SQLite.
+You can use ``LiteCLI`` for a much better terminal experience when using SQLite, but it does not support some of SQLite's own commands.
 
 Reference
 ------------
