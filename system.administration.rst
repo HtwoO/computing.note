@@ -508,6 +508,32 @@ net.ipv4.ping_group_range = 0 1000
 
 ``macOS``
 
+``networksetup -setmanual networkservice ip subnet router``
+>>> networksetup -setmanual 'AX88179' 10.3.3.3 255.255.255.0 10.3.3.254
+
+``networksetup -setv6manual ip prefixlength router``
+
+``ipconfig set interface-name (MANUAL | INFORM) ip-address subnet-mask``
+>>> ipconfig set en4 MANUAL ip-address subnet-mask
+
+>>> networksetup -setdhcp "Ethernet"
+
+``ipconfig set interface-name DHCP``
+>>> ipconfig set en4 DHCP
+
+``ipconfig set interface-name AUTOMATIC-V6``
+``ipconfig set interface-name MANUAL-V6 ipv6-address prefix-length``
+
+>>> networksetup -getinfo 'AX88179'
+Manual Configuration
+IP address: 10.3.3.3
+Subnet mask: 255.255.255.0
+Router: 10.3.3.254
+IPv6: Automatic
+IPv6 IP address: none
+IPv6 Router: none
+Ethernet Address: 00:...:20
+
 >>> sudo route -n add -net w.x.y.z/m a.b.c.d
 >>> sudo netstat -nr
 Routing tables
@@ -521,6 +547,15 @@ Destination     Gateway         Flags     Netif   Expire
 default         fe80::%utun0    UGcIg     utun0       
 default         fe80::%utun1    UGcIg     utun1
 ff02::%en4/32   link#13         UmCI      en4
+
+>>> sudo route delete default -interface en4
+Password:
+delete net default: gateway en4
+
+>>> sudo route add default 10.3.3.1
+
+>>> sudo route change default -interface $INTF
+>>> sudo route change 10.3.0.0/16 -interface $INTF
 
 >>> route get example.net
    route to: 93.184.216.34
