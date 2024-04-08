@@ -92,11 +92,113 @@ Networking
 List network interface
 
 >>> Get-NetIPInterface
+ifIndex InterfaceAlias                  AddressFamily NlMtu(Bytes) InterfaceMetric Dhcp     ConnectionState PolicyStore
+------- --------------                  ------------- ------------ --------------- ----     --------------- -----------
+6       以太网 3                        IPv6                  1500               5 Enabled  Disconnected    ActiveStore
+3       以太网                          IPv6                  1500              25 Enabled  Connected       ActiveStore
+1       Loopback Pseudo-Interface 1     IPv6            4294967295              75 Disabled Connected       ActiveStore
+6       以太网 3                        IPv4                  1500               5 Disabled Disconnected    ActiveStore
+3       以太网                          IPv4                  1500              25 Enabled  Connected       ActiveStore
+1       Loopback Pseudo-Interface 1     IPv4            4294967295              75 Disabled Connected       ActiveStore
+
 >>> netsh interface show interface
+管理员状态     状态           类型             接口名称
+-------------------------------------------------------------------------
+已启用            已断开连接          专用               以太网 3
+已启用            已连接            专用               以太网
+
+>>> Get-NetIPAddress
+.
+IPAddress         : fe80::8b80:8828:9ab3:41ff%3
+InterfaceIndex    : 3
+InterfaceAlias    : 以太网
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Preferred
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+.
+IPAddress         : 10.0.2.15
+InterfaceIndex    : 3
+InterfaceAlias    : 以太网
+AddressFamily     : IPv4
+Type              : Unicast
+PrefixLength      : 24
+PrefixOrigin      : Dhcp
+SuffixOrigin      : Dhcp
+AddressState      : Preferred
+ValidLifetime     : 23:45:48
+PreferredLifetime : 23:45:48
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+>>> Get-NetIPAddress | Format-Table
+ifIndex IPAddress                                       PrefixLength PrefixOrigin SuffixOrigin AddressState PolicyStore
+------- ---------                                       ------------ ------------ ------------ ------------ -----------
+3       fe80::8b80:8828:9ab3:41ff%3                               64 WellKnown    Link         Preferred    ActiveStore
+1       ::1                                                      128 WellKnown    WellKnown    Preferred    ActiveStore
+3       10.0.2.15                                                 24 Dhcp         Dhcp         Preferred    ActiveStore
+1       127.0.0.1                                                  8 WellKnown    WellKnown    Preferred    ActiveStore
+
+>>> Get-NetIPAddress -AddressFamily IPv4 | Format-Table
+ifIndex IPAddress                                       PrefixLength PrefixOrigin SuffixOrigin AddressState PolicyStore
+------- ---------                                       ------------ ------------ ------------ ------------ -----------
+3       10.0.2.15                                                 24 Dhcp         Dhcp         Preferred    ActiveStore
+1       127.0.0.1                                                  8 WellKnown    WellKnown    Preferred    ActiveStore
+
+>>> netsh interface ip show config
+接口 "以太网" 的配置
+    DHCP 已启用:                          是
+    IP 地址:                           10.0.2.15
+    子网前缀:                        10.0.2.0/24 (掩码 255.255.255.0)
+    默认网关:                         10.0.2.2
+    网关跃点数:                       0
+    InterfaceMetric:                      25
+    通过 DHCP 配置的 DNS 服务器:      180.184.1.1
+                                          180.184.2.2
+                                          1.2.4.8
+    用哪个前缀注册:                   只是主要
+    通过 DHCP 配置的 WINS 服务器:     无
+.
+接口 "Loopback Pseudo-Interface 1" 的配置
+    DHCP 已启用:                          否
+    IP 地址:                           127.0.0.1
+    子网前缀:                        127.0.0.0/8 (掩码 255.0.0.0)
+    InterfaceMetric:                      75
+    静态配置的 DNS 服务器:            无
+    用哪个前缀注册:                   只是主要
+    静态配置的 WINS 服务器:           无
+
+>>> netsh interface ip show address "以太网"
+接口 "以太网" 的配置
+    DHCP 已启用:                          是
+    IP 地址:                           10.0.2.15
+    子网前缀:                        10.0.2.0/24 (掩码 255.255.255.0)
+    默认网关:                         10.0.2.2
+    网关跃点数:                       0
+    InterfaceMetric:                      25
+
+>>> netsh interface ipv6 show address "以太网"
+地址 fe80::8b80:8828:9ab3:41ff%3 参数
+---------------------------------------------------------
+接口 Luid          : 以太网
+作用域 ID          : 0.3
+有效生存时间       : infinite
+首选生存时间       : infinite
+DAD 状态           : 首选项
+地址类型           : 其他
+跳过作为源         : false
 
 Set static IP, mask, gateway
 
 >>> New-NetIPAddress -InterfaceAlias Ethernet -IPAddress 10.3.3.11 -PrefixLength 24 -DefaultGateway 10.3.3.1
+>>> Set-NetIPAddress -InterfaceAlias Ethernet -IPAddress 10.3.3.11 -PrefixLength 24 -DefaultGateway 10.3.3.1
+
 >>> netsh interface ipv4 set address "Local Area Connection" source=static 10.3.3.11 255.255.255.0 10.3.3.1
 
 >>> Get-NetAdapter
