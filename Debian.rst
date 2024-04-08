@@ -178,12 +178,12 @@ You can use interactive mode to generate ``~/.reportbugrc``, but below is a file
     reportbug_version "7.5.3~deb10u1"
     mode standard
     ui text
-    email "zcat1@exmaple.net"
+    email "zcat1@example.net"
     offline
     smtphost "smtp.gmail.com"
     smtptls
 
-With proper setting in the above config file, you can not send bug reports with the following command, replace ``<package>`` with actual package name (on your system). ``reportbug`` will collect informations about the package in question.
+With proper setting in the above config file, you can then send bug reports with the following command, replace ``<package>`` with actual package name (on your system). ``reportbug`` will collect informations about the package in question.
 
 >>> reportbug --no-query-bts --quiet --severity=normal --subject=none \
     --tag=none --template --list-cc none <package>
@@ -196,7 +196,7 @@ In the following, I use ``dbus`` as an example.
 Note: bug reports are publicly archived (including the email address of the submitter).
 Detected character set: UTF-8
 ...
-Using 'Debian <zcat1@exmaple.net>' as your from address.
+Using 'Debian <zcat1@example.net>' as your from address.
 ...
 Rewriting subject to 'dbus: none'
 Saving a backup of the report at /tmp/reportbug-dbus-backup-20230205115405-eyhjz84p
