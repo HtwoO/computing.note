@@ -178,7 +178,13 @@ You can't access this shared folder because your organization's security policie
 Process management
 -------------------
 
-Tools on Linux: ``top`` ``htop``
+interactive tool on Linux: ``top`` ``htop``
+
+>>> top --sort-override=%MEM    # top -o %MEM   # sort by memory usage in descending order 按内存耗用从大到小排序
+
+interactive tool on macOS: ``top`` ``htop``
+
+>>> top -o mem  # sort by memory usage in descending order 按内存耗用从大到小排序
 
 Tools on Windows: Task Manager (GUI)
 
@@ -212,8 +218,8 @@ launchd       1           root    8u  IPv6 0x322fedbd02e6f175      0t0    TCP *:
 .
 dns-sd     4696           _www    6u  IPv4 0x322fedbd18819bc5      0t0    TCP *:1715 (LISTEN)
 
->>> sudo netstat -an | grep --ignore-case 'listen'
-tcp6   0   0  *.8080     *.*    LISTEN
+>>> sudo netstat -ano | grep --ignore-case 'listen'
+tcp6   0   0  *.8080     *.*    LISTEN   1729
 .
 
 Windows PowerShell
@@ -669,7 +675,7 @@ Log network traffic data with ``vnstat``
 Adding interface "enX0" to database for monitoring.
 vnStat daemon will automatically start monitoring "enX0" within 5 minutes if the daemon process is currently running.
 
-You will also need to enable the specific interface in `/etc/vnstat.conf` ::
+You will also need to enable the specific interface in ``/etc/vnstat.conf`` ::
 
  Interface "enX0"
 
