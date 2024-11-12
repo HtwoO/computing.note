@@ -73,7 +73,7 @@ https://registry.npmjs.org/
 
 Setup NPM mainland China mirror
 
-With registry points to https://registry.npmmirror.com/ , npm search doesn't work sometimes, use the following to search available package
+With registry pointing to https://registry.npmmirror.com/ , npm search doesn't work (sometimes?), use the following to search available package
 
 >>> npm --registry=https://registry.npmjs.org search cloudflare
 NAME        | DESCRIPTION       | AUTHOR        | DATE       | VERSION  | KEYWORDS

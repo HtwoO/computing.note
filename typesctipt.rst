@@ -1,4 +1,4 @@
-Online Typescript REPL (Read-Eval-Print Loop)
+Online Typescript Read-Eval-Print Loop (REPL)
 
 https://www.typescriptlang.org/play
 
