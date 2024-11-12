@@ -196,7 +196,14 @@ with PowerShell
 
 >>> Get-Process
 
+With Windows command line including cmd.exe
+
 >>> taskkill /f /pid 3312
+
+>>> taskkill /pid 1230 /pid 1241 /pid 1253
+
+To end the process with the process ID 2134 and any child processes that it started, but only if those processes were started by the Administrator account
+>>> taskkill /pid 2134 /t /fi "username eq administrator"
 
 Find out network service list
 
