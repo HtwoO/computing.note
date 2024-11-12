@@ -206,6 +206,10 @@ Name      InterfaceDescription       ifIndex Status   MacAddress          LinkSp
 ----      --------------------       ------- ------   ----------          ---------
 Ethernet  Intel(R) 82574L Gigabit...       6 Up       52-54-00-B3-8F-D6      1 Gbps
 
+Change **only** the gateway of interface of specified name
+
+>>> netsh interface ip set address name="Ethernet 2" static 10.3.3.6 255.255.255.0 10.3.3.254
+
 >>> Get-DnsClientServerAddress -InterfaceIndex 6
 InterfaceAlias  Interface Address ServerAddresses
                 Index     Family
